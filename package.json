@@ -1,0 +1,11 @@
+{
+  "name": "financas-pro",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node backend/server.js",
+    "install:backend": "cd backend && npm install"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
