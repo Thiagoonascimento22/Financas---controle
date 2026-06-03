@@ -13,14 +13,16 @@ const state = {
 };
 
 const COLOR_OPTIONS = [
-  { color: '#3B6D11', bg: '#EAF3DE' },
-  { color: '#185FA5', bg: '#E6F1FB' },
-  { color: '#534AB7', bg: '#EEEDFE' },
-  { color: '#A32D2D', bg: '#FCEBEB' },
-  { color: '#854F0B', bg: '#FAEEDA' },
-  { color: '#0F6E56', bg: '#E1F5EE' },
-  { color: '#993556', bg: '#FBEAF0' },
-  { color: '#5F5E5A', bg: '#F1EFE8' },
+  { color: '#22c55e', bg: 'rgba(34,197,94,0.15)' },
+  { color: '#60a5fa', bg: 'rgba(96,165,250,0.15)' },
+  { color: '#a78bfa', bg: 'rgba(167,139,250,0.15)' },
+  { color: '#f87171', bg: 'rgba(248,113,113,0.15)' },
+  { color: '#fbbf24', bg: 'rgba(251,191,36,0.15)' },
+  { color: '#f97316', bg: 'rgba(249,115,22,0.15)' },
+  { color: '#e879f9', bg: 'rgba(232,121,249,0.15)' },
+  { color: '#38bdf8', bg: 'rgba(56,189,248,0.15)' },
+  { color: '#34d399', bg: 'rgba(52,211,153,0.15)' },
+  { color: '#94a3b8', bg: 'rgba(148,163,184,0.15)' },
 ];
 
 // ── UTILS ──
@@ -473,21 +475,21 @@ async function loadGraficos() {
   destroyChart('lineChart');
   state.charts.lineChart = new Chart(el('lineChart'), {
     type: 'line',
-    data: { labels, datasets: [{ label: 'Saldo', data: bals, borderColor: '#185FA5', backgroundColor: 'rgba(24,95,165,0.08)', tension: 0.4, fill: true, pointRadius: 4 }] },
+    data: { labels, datasets: [{ label: 'Saldo', data: bals, borderColor: '#6366f1', backgroundColor: 'rgba(99,102,241,0.08)', tension: 0.4, fill: true, pointRadius: 4 }] },
     options: chartOpts(true)
   });
 
   destroyChart('inChart');
   state.charts.inChart = new Chart(el('inChart'), {
     type: 'bar',
-    data: { labels, datasets: [{ label: 'Receitas', data: ins, backgroundColor: 'rgba(59,109,17,0.75)', borderRadius: 4 }] },
+    data: { labels, datasets: [{ label: 'Receitas', data: ins, backgroundColor: 'rgba(34,197,94,0.7)', borderRadius: 4 }] },
     options: chartOpts()
   });
 
   destroyChart('outChart');
   state.charts.outChart = new Chart(el('outChart'), {
     type: 'bar',
-    data: { labels, datasets: [{ label: 'Despesas', data: outs, backgroundColor: 'rgba(163,45,45,0.75)', borderRadius: 4 }] },
+    data: { labels, datasets: [{ label: 'Despesas', data: outs, backgroundColor: 'rgba(248,113,113,0.7)', borderRadius: 4 }] },
     options: chartOpts()
   });
 }
@@ -499,8 +501,8 @@ function chartOpts(showNeg = false) {
     maintainAspectRatio: false,
     plugins: { legend: { display: false } },
     scales: {
-      x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 45, autoSkip: false } },
-      y: { grid: { color: 'rgba(128,128,128,0.1)' }, ticks: { font: { size: 11 }, callback: v => fmtShort(v) } }
+      x: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 10 }, color: '#555a72', maxRotation: 45, autoSkip: false } },
+      y: { grid: { color: 'rgba(255,255,255,0.05)', drawBorder: false }, border: { display: false }, ticks: { font: { size: 11 }, color: '#555a72', callback: v => fmtShort(v) } }
     }
   };
 }
@@ -520,8 +522,8 @@ function renderBarChart(summary) {
   state.charts.barChart = new Chart(el('barChart'), {
     type: 'bar',
     data: { labels, datasets: [
-      { label: 'Receitas', data: ins,  backgroundColor: 'rgba(59,109,17,0.75)', borderRadius: 4 },
-      { label: 'Despesas', data: outs, backgroundColor: 'rgba(163,45,45,0.75)', borderRadius: 4 }
+      { label: 'Receitas', data: ins,  backgroundColor: 'rgba(34,197,94,0.7)', borderRadius: 6, borderSkipped: false },
+      { label: 'Despesas', data: outs, backgroundColor: 'rgba(248,113,113,0.7)', borderRadius: 6, borderSkipped: false }
     ]},
     options: chartOpts()
   });

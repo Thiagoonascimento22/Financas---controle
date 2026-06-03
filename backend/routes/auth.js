@@ -6,14 +6,18 @@ const { pool } = require('../db');
 const router = express.Router();
 
 const DEFAULT_CATEGORIES = [
-  { name: 'Alimentação',  icon: 'ti-shopping-cart', color: '#3B6D11', color_bg: '#EAF3DE' },
-  { name: 'Moradia',      icon: 'ti-home',           color: '#185FA5', color_bg: '#E6F1FB' },
-  { name: 'Transporte',   icon: 'ti-car',            color: '#534AB7', color_bg: '#EEEDFE' },
-  { name: 'Saúde',        icon: 'ti-heart',          color: '#A32D2D', color_bg: '#FCEBEB' },
-  { name: 'Lazer',        icon: 'ti-device-gamepad', color: '#854F0B', color_bg: '#FAEEDA' },
-  { name: 'Educação',     icon: 'ti-school',         color: '#0F6E56', color_bg: '#E1F5EE' },
-  { name: 'Vestuário',    icon: 'ti-shirt',          color: '#993556', color_bg: '#FBEAF0' },
-  { name: 'Outros',       icon: 'ti-dots',           color: '#5F5E5A', color_bg: '#F1EFE8' },
+  { name: 'Alimentação',   icon: 'ti-tools-kitchen-2', color: '#22c55e', color_bg: 'rgba(34,197,94,0.15)' },
+  { name: 'Combustível',   icon: 'ti-gas-station',     color: '#f97316', color_bg: 'rgba(249,115,22,0.15)' },
+  { name: 'Moradia',       icon: 'ti-home',             color: '#60a5fa', color_bg: 'rgba(96,165,250,0.15)' },
+  { name: 'Saúde',         icon: 'ti-heart-rate-monitor', color: '#f87171', color_bg: 'rgba(248,113,113,0.15)' },
+  { name: 'Educação',      icon: 'ti-school',           color: '#a78bfa', color_bg: 'rgba(167,139,250,0.15)' },
+  { name: 'Lazer',         icon: 'ti-confetti',         color: '#fbbf24', color_bg: 'rgba(251,191,36,0.15)' },
+  { name: 'Vestuário',     icon: 'ti-shirt',            color: '#e879f9', color_bg: 'rgba(232,121,249,0.15)' },
+  { name: 'Assinaturas',   icon: 'ti-device-tv',        color: '#38bdf8', color_bg: 'rgba(56,189,248,0.15)' },
+  { name: 'Mercado',       icon: 'ti-shopping-cart',    color: '#4ade80', color_bg: 'rgba(74,222,128,0.15)' },
+  { name: 'Farmácia',      icon: 'ti-pill',             color: '#fb7185', color_bg: 'rgba(251,113,133,0.15)' },
+  { name: 'Investimento',  icon: 'ti-trending-up',      color: '#34d399', color_bg: 'rgba(52,211,153,0.15)' },
+  { name: 'Outros',        icon: 'ti-dots',             color: '#94a3b8', color_bg: 'rgba(148,163,184,0.15)' },
 ];
 
 router.post('/register', async (req, res) => {
