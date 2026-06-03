@@ -322,6 +322,9 @@ select option { background: var(--surface); color: var(--txt); }
 .ia-loading-full {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 4rem 2rem; text-align: center; gap: 16px;
+  min-height: 300px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow-sm);
 }
 .ia-loading-icon { display: flex; gap: 8px; }
 .ia-loading-full p { font-size: 15px; font-weight: 600; color: var(--txt); }

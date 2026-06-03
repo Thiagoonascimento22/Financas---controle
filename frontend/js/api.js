@@ -6,6 +6,13 @@ const API = (() => {
     const t = localStorage.getItem('fp_token');
     if (t) h['Authorization'] = 'Bearer ' + t;
     return h;
+
+    // Admin
+    adminStats: () => req('GET', '/admin/stats'),
+    adminUsers: () => req('GET', '/admin/users'),
+    blockUser: (id, blocked) => req('PATCH', `/admin/users/${id}/block`, { blocked }),
+    deleteUser: (id) => req('DELETE', `/admin/users/${id}`),
+
   };
 
   const req = async (method, path, body) => {
@@ -17,6 +24,13 @@ const API = (() => {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Erro desconhecido');
     return data;
+
+    // Admin
+    adminStats: () => req('GET', '/admin/stats'),
+    adminUsers: () => req('GET', '/admin/users'),
+    blockUser: (id, blocked) => req('PATCH', `/admin/users/${id}/block`, { blocked }),
+    deleteUser: (id) => req('DELETE', `/admin/users/${id}`),
+
   };
 
   return {
@@ -43,9 +57,11 @@ const API = (() => {
     createCategory:  (body)     => req('POST',   '/categories', body),
     deleteCategory:  (id)       => req('DELETE', `/categories/${id}`),
 
+    // Admin
     adminStats: () => req('GET', '/admin/stats'),
     adminUsers: () => req('GET', '/admin/users'),
     blockUser: (id, blocked) => req('PATCH', `/admin/users/${id}/block`, { blocked }),
     deleteUser: (id) => req('DELETE', `/admin/users/${id}`),
+
   };
 })();

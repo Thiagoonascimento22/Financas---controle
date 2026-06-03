@@ -151,9 +151,10 @@ async function runAI() {
   el('btn-analyze').disabled = true;
 
   try {
-    const entries = await API.getEntries({ month: state.currentMonth, year: state.currentYear });
-    const summary = await API.getSummary(6);
-    const catData = await API.getByCategory(state.currentMonth, state.currentYear);
+    const [entries, catData] = await Promise.all([
+      API.getEntries({ month: state.currentMonth, year: state.currentYear }),
+      API.getByCategory(state.currentMonth, state.currentYear)
+    ]);
 
     const ins  = entries.filter(e => e.type === 'in');
     const outs = entries.filter(e => e.type === 'out');
@@ -163,32 +164,22 @@ async function runAI() {
     if (!entries.length) {
       el('ia-loading').classList.add('hidden');
       el('ia-result').classList.remove('hidden');
-      el('ia-result-body').innerHTML = '<span style="color:var(--txt3)">Você ainda não tem lançamentos neste mês. Adicione suas receitas e despesas para receber a análise.</span>';
+      el('ia-result-body').innerHTML = '<p style="color:var(--txt3);text-align:center;padding:2rem">Você ainda não tem lançamentos em ' + MONTHS[state.currentMonth-1] + '. Adicione suas receitas e despesas para receber a análise.</p>';
       el('ia-result-meta').textContent = '';
       el('btn-analyze').disabled = false;
       return;
     }
 
     const catSummary = catData.map(c=>`${c.name}: R$${parseFloat(c.total).toFixed(2)}`).join(', ');
-    const topExp = outs.sort((a,b)=>b.amount-a.amount).slice(0,5).map(e=>`${e.description} (R$${parseFloat(e.amount).toFixed(2)})`).join(', ');
+    const topExp = [...outs].sort((a,b)=>b.amount-a.amount).slice(0,5).map(e=>`${e.description} (R$${parseFloat(e.amount).toFixed(2)})`).join(', ');
 
-    const hist = [];
-    for (let i=5;i>=0;i--) {
-      let m=state.currentMonth-i, y=state.currentYear;
-      if (m<1){m+=12;y--;}
-      const si = parseFloat(summary.find(s=>s.month===m&&s.year===y&&s.type==='in')?.total||0);
-      const so = parseFloat(summary.find(s=>s.month===m&&s.year===y&&s.type==='out')?.total||0);
-      hist.push(`${MONTHS_SHORT[m-1]}/${String(y).slice(2)}: receita R$${si.toFixed(0)}, despesa R$${so.toFixed(0)}`);
-    }
-
-    const context = `Dados do usuário — ${MONTHS[state.currentMonth-1]} ${state.currentYear}:
-- Receitas: R$${sumIn.toFixed(2)} (${ins.length} lançamentos)
-- Despesas: R$${sumOut.toFixed(2)} (${outs.length} lançamentos)
+    const context = `Dados do mês atual — ${MONTHS[state.currentMonth-1]} ${state.currentYear}:
+- Receitas: R$${sumIn.toFixed(2)} (${ins.length} lançamento${ins.length!==1?'s':''})
+- Despesas: R$${sumOut.toFixed(2)} (${outs.length} lançamento${outs.length!==1?'s':''})
 - Saldo: R$${(sumIn-sumOut).toFixed(2)}
 - Taxa de poupança: ${sumIn>0?(((sumIn-sumOut)/sumIn)*100).toFixed(1):0}%
-- Gastos por categoria: ${catSummary||'nenhum'}
-- Maiores despesas: ${topExp||'nenhuma'}
-- Histórico 6 meses: ${hist.join(' | ')}`;
+- Gastos por categoria: ${catSummary||'nenhum gasto registrado'}
+- Maiores despesas do mês: ${topExp||'nenhuma'}`;
 
     const response = await fetch('/api/ai/analyze', {
       method: 'POST',
@@ -205,7 +196,7 @@ async function runAI() {
   } catch(e) {
     el('ia-loading').classList.add('hidden');
     el('ia-result').classList.remove('hidden');
-    el('ia-result-body').innerHTML = `<span style="color:var(--red)">Erro: ${e.message}. Verifique se a variável ANTHROPIC_API_KEY está configurada no Railway.</span>`;
+    el('ia-result-body').innerHTML = `<p style="color:var(--red)">Erro: ${e.message}</p>`;
     el('ia-result-meta').textContent = '';
   }
   el('btn-analyze').disabled = false;
