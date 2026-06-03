@@ -12,6 +12,8 @@ app.use(express.json());
 app.use('/api/auth',       require('./routes/auth'));
 app.use('/api/entries',    require('./routes/entries'));
 app.use('/api/categories', require('./routes/categories'));
+app.use('/api/ai',         require('./routes/ai'));
+app.use('/api/admin',      require('./routes/admin'));
 
 app.use(express.static(path.join(__dirname, '../frontend')));
 app.get('*', (req, res) => {

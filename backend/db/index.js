@@ -12,6 +12,8 @@ const createTables = async () => {
       name VARCHAR(100) NOT NULL,
       email VARCHAR(150) UNIQUE NOT NULL,
       password_hash VARCHAR(255) NOT NULL,
+      is_admin BOOLEAN DEFAULT FALSE,
+      is_blocked BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMP DEFAULT NOW()
     );
 
@@ -20,8 +22,8 @@ const createTables = async () => {
       user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
       name VARCHAR(80) NOT NULL,
       icon VARCHAR(40) DEFAULT 'ti-tag',
-      color VARCHAR(20) DEFAULT '#185FA5',
-      color_bg VARCHAR(20) DEFAULT '#E6F1FB',
+      color VARCHAR(30) DEFAULT '#2563eb',
+      color_bg VARCHAR(50) DEFAULT 'rgba(37,99,235,0.12)',
       created_at TIMESTAMP DEFAULT NOW()
     );
 
@@ -35,8 +37,11 @@ const createTables = async () => {
       entry_date DATE NOT NULL,
       created_at TIMESTAMP DEFAULT NOW()
     );
+
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS is_admin BOOLEAN DEFAULT FALSE;
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS is_blocked BOOLEAN DEFAULT FALSE;
   `);
-  console.log('Tabelas criadas/verificadas com sucesso.');
+  console.log('Tabelas criadas/verificadas.');
 };
 
 module.exports = { pool, createTables };
