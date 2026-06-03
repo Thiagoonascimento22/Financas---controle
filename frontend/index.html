@@ -9,8 +9,10 @@
 </head>
 <body>
 
-<!-- AUTH SCREEN -->
+<!-- AUTH -->
 <div id="auth-screen" class="auth-screen">
+  <div class="auth-blob1"></div>
+  <div class="auth-blob2"></div>
   <div class="auth-card">
     <div class="auth-logo">
       <div class="auth-logo-icon"><i class="ti ti-chart-pie-2"></i></div>
@@ -23,90 +25,68 @@
       <button id="tab-login" class="auth-tab active" onclick="switchTab('login')">Entrar</button>
       <button id="tab-register" class="auth-tab" onclick="switchTab('register')">Criar conta</button>
     </div>
-
-    <!-- Login -->
     <div id="form-login">
-      <div class="field">
-        <label>E-mail</label>
-        <input type="email" id="login-email" placeholder="seu@email.com" autocomplete="email"/>
-      </div>
-      <div class="field">
-        <label>Senha</label>
+      <div class="field"><label>E-mail</label><input type="email" id="login-email" placeholder="seu@email.com" autocomplete="email"/></div>
+      <div class="field"><label>Senha</label>
         <div class="input-icon-wrap">
           <input type="password" id="login-pass" placeholder="Sua senha" autocomplete="current-password"/>
           <i class="ti ti-eye toggle-pass" onclick="togglePass('login-pass',this)"></i>
         </div>
       </div>
       <div id="login-error" class="form-error hidden"></div>
-      <button class="btn-primary" onclick="doLogin()">
-        <span>Entrar</span><i class="ti ti-arrow-right"></i>
-      </button>
+      <button class="btn-primary" onclick="doLogin()"><span>Entrar na conta</span><i class="ti ti-arrow-right"></i></button>
     </div>
-
-    <!-- Register -->
     <div id="form-register" class="hidden">
-      <div class="field">
-        <label>Nome completo</label>
-        <input type="text" id="reg-name" placeholder="Seu nome" autocomplete="name"/>
-      </div>
-      <div class="field">
-        <label>E-mail</label>
-        <input type="email" id="reg-email" placeholder="seu@email.com" autocomplete="email"/>
-      </div>
-      <div class="field">
-        <label>Senha</label>
+      <div class="field"><label>Nome completo</label><input type="text" id="reg-name" placeholder="Seu nome" autocomplete="name"/></div>
+      <div class="field"><label>E-mail</label><input type="email" id="reg-email" placeholder="seu@email.com" autocomplete="email"/></div>
+      <div class="field"><label>Senha</label>
         <div class="input-icon-wrap">
           <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres" autocomplete="new-password"/>
           <i class="ti ti-eye toggle-pass" onclick="togglePass('reg-pass',this)"></i>
         </div>
       </div>
       <div id="register-error" class="form-error hidden"></div>
-      <button class="btn-primary" onclick="doRegister()">
-        <span>Criar minha conta</span><i class="ti ti-arrow-right"></i>
-      </button>
+      <button class="btn-primary" onclick="doRegister()"><span>Criar minha conta</span><i class="ti ti-arrow-right"></i></button>
     </div>
   </div>
 </div>
 
-<!-- APP SCREEN -->
+<!-- APP -->
 <div id="app-screen" class="app hidden">
-
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="sidebar-logo-icon"><i class="ti ti-chart-pie-2"></i></div>
       <div>
-        <div class="sidebar-logo-text">Controle Financeiro</div>
-        <div class="sidebar-logo-sub">Gestão pessoal</div>
+        <div class="sidebar-logo-name">Controle Financeiro</div>
+        <div class="sidebar-logo-tagline">Gestão pessoal</div>
       </div>
     </div>
     <nav class="sidebar-nav">
-      <a class="nav-item active" data-page="dashboard" onclick="navigate('dashboard')">
-        <i class="ti ti-layout-dashboard"></i>Dashboard
-      </a>
-      <a class="nav-item" data-page="lancamentos" onclick="navigate('lancamentos')">
-        <i class="ti ti-list"></i>Lançamentos
-      </a>
-      <a class="nav-item" data-page="graficos" onclick="navigate('graficos')">
-        <i class="ti ti-chart-line"></i>Gráficos
-      </a>
-      <a class="nav-item" data-page="categorias" onclick="navigate('categorias')">
-        <i class="ti ti-tag"></i>Categorias
-      </a>
+      <div class="nav-section">Principal</div>
+      <a class="nav-item active" data-page="dashboard" onclick="navigate('dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</a>
+      <a class="nav-item" data-page="ia" onclick="navigate('ia')"><i class="ti ti-brain"></i>Análise IA</a>
+      <div class="nav-section">Financeiro</div>
+      <a class="nav-item" data-page="lancamentos" onclick="navigate('lancamentos')"><i class="ti ti-list-details"></i>Lançamentos</a>
+      <a class="nav-item" data-page="graficos" onclick="navigate('graficos')"><i class="ti ti-chart-line"></i>Gráficos</a>
+      <a class="nav-item" data-page="categorias" onclick="navigate('categorias')"><i class="ti ti-tag"></i>Categorias</a>
     </nav>
-    <div class="sidebar-footer">
-      <div class="user-info">
+    <div class="sidebar-bottom">
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">
+        <i class="ti ti-moon" id="theme-icon"></i>
+        <span id="theme-label">Modo escuro</span>
+        <div class="toggle-pill" id="theme-pill"></div>
+      </button>
+      <div class="user-card">
         <div class="user-avatar" id="user-avatar">?</div>
         <div class="user-details">
           <div class="user-name" id="user-name">...</div>
           <div class="user-email" id="user-email">...</div>
         </div>
+        <button class="btn-logout" onclick="logout()" title="Sair"><i class="ti ti-logout"></i></button>
       </div>
-      <button class="btn-logout" onclick="logout()" title="Sair"><i class="ti ti-logout"></i></button>
     </div>
   </aside>
 
-  <!-- MAIN -->
   <main class="main-content">
     <header class="topbar">
       <div class="topbar-left">
@@ -119,50 +99,65 @@
           <span id="month-label"></span>
           <button onclick="changeMonth(1)"><i class="ti ti-chevron-right"></i></button>
         </div>
-        <button class="btn-new" onclick="openModal()">
-          <i class="ti ti-plus"></i><span>Lançamento</span>
-        </button>
+        <button class="btn-new" onclick="openModal()"><i class="ti ti-plus"></i><span>Lançamento</span></button>
       </div>
     </header>
 
-    <!-- DASHBOARD PAGE -->
+    <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div class="summary-cards">
         <div class="scard green">
-          <div class="scard-label"><i class="ti ti-arrow-up-circle"></i>Receitas do mês</div>
+          <div class="scard-icon"><i class="ti ti-trending-up"></i></div>
+          <div class="scard-label">Receitas do mês</div>
           <div class="scard-value" id="s-in">R$ 0,00</div>
           <div class="scard-sub" id="s-in-count">0 lançamentos</div>
+          <div class="scard-stripe"></div>
         </div>
         <div class="scard red">
-          <div class="scard-label"><i class="ti ti-arrow-down-circle"></i>Despesas do mês</div>
+          <div class="scard-icon"><i class="ti ti-trending-down"></i></div>
+          <div class="scard-label">Despesas do mês</div>
           <div class="scard-value" id="s-out">R$ 0,00</div>
           <div class="scard-sub" id="s-out-count">0 lançamentos</div>
+          <div class="scard-stripe"></div>
         </div>
-        <div class="scard blue" id="scard-bal">
-          <div class="scard-label"><i class="ti ti-scale"></i>Saldo do mês</div>
+        <div class="scard blue">
+          <div class="scard-icon"><i class="ti ti-scale"></i></div>
+          <div class="scard-label">Saldo do mês</div>
           <div class="scard-value" id="s-bal">R$ 0,00</div>
-          <div class="scard-sub" id="s-bal-pct">—</div>
+          <div class="scard-sub" id="s-bal-txt">balanço mensal</div>
+          <div class="scard-stripe"></div>
         </div>
         <div class="scard purple">
-          <div class="scard-label"><i class="ti ti-calendar-stats"></i>Total de lançamentos</div>
+          <div class="scard-icon"><i class="ti ti-calendar-stats"></i></div>
+          <div class="scard-label">Lançamentos</div>
           <div class="scard-value" id="s-count">0</div>
           <div class="scard-sub">neste mês</div>
+          <div class="scard-stripe"></div>
         </div>
+      </div>
+
+      <!-- AI INSIGHT INLINE -->
+      <div class="ai-card" id="dash-ai-card">
+        <div class="ai-card-header">
+          <div class="ai-badge"><i class="ti ti-sparkles"></i>IA — Análise do mês</div>
+          <div class="ai-card-title" id="dash-ai-title">Resumo financeiro inteligente</div>
+        </div>
+        <div class="ai-content" id="dash-ai-content">
+          <div class="ai-loading"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span>Analisando seus dados...</span></div>
+        </div>
+        <button class="ai-refresh" onclick="loadDashboardAI()"><i class="ti ti-refresh"></i>Atualizar análise</button>
       </div>
 
       <div class="charts-row">
         <div class="card chart-card">
           <div class="card-header">
-            <span class="card-title">Receitas x Despesas — últimos 6 meses</span>
-            <div class="legend">
-              <span class="leg-dot green"></span>Receitas
-              <span class="leg-dot red" style="margin-left:12px"></span>Despesas
-            </div>
+            <span class="card-title">Receitas x Despesas — 6 meses</span>
+            <div class="legend"><span class="leg-dot green"></span>Receitas<span class="leg-dot red" style="margin-left:10px"></span>Despesas</div>
           </div>
           <div class="chart-wrap"><canvas id="barChart"></canvas></div>
         </div>
         <div class="card chart-card">
-          <div class="card-header"><span class="card-title">Despesas por categoria</span></div>
+          <div class="card-header"><span class="card-title">Por categoria</span></div>
           <div class="chart-wrap sm"><canvas id="donutChart"></canvas></div>
         </div>
       </div>
@@ -182,27 +177,53 @@
       </div>
     </div>
 
-    <!-- LANCAMENTOS PAGE -->
+    <!-- IA PAGE -->
+    <div class="page" id="page-ia">
+      <div class="ai-card" style="margin-bottom:14px">
+        <div class="ai-card-header">
+          <div class="ai-badge"><i class="ti ti-sparkles"></i>Análise completa</div>
+          <div class="ai-card-title">Diagnóstico financeiro do mês</div>
+        </div>
+        <div class="ai-content" id="ia-full-content">
+          <div class="ai-loading"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span>Preparando análise...</span></div>
+        </div>
+        <button class="ai-refresh" onclick="loadFullAI()"><i class="ti ti-refresh"></i>Nova análise</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="ai-card">
+          <div class="ai-card-header">
+            <div class="ai-badge"><i class="ti ti-bulb"></i>Dicas</div>
+            <div class="ai-card-title">Sugestões de economia</div>
+          </div>
+          <div class="ai-content" id="ia-tips-content">
+            <div class="ai-loading"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span>Gerando dicas...</span></div>
+          </div>
+        </div>
+        <div class="ai-card">
+          <div class="ai-card-header">
+            <div class="ai-badge"><i class="ti ti-target"></i>Metas</div>
+            <div class="ai-card-title">Sugestão de metas</div>
+          </div>
+          <div class="ai-content" id="ia-goals-content">
+            <div class="ai-loading"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span>Calculando metas...</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANCAMENTOS -->
     <div class="page" id="page-lancamentos">
       <div class="filter-bar">
-        <select id="f-type" onchange="loadLancamentos()">
-          <option value="">Todos os tipos</option>
-          <option value="in">Receitas</option>
-          <option value="out">Despesas</option>
-        </select>
-        <select id="f-cat" onchange="loadLancamentos()">
-          <option value="">Todas as categorias</option>
-        </select>
-        <select id="f-month-filter" onchange="loadLancamentos()">
-          <option value="">Todos os meses</option>
-        </select>
+        <select id="f-type" onchange="loadLancamentos()"><option value="">Todos os tipos</option><option value="in">Receitas</option><option value="out">Despesas</option></select>
+        <select id="f-cat" onchange="loadLancamentos()"><option value="">Todas as categorias</option></select>
+        <select id="f-month-filter" onchange="loadLancamentos()"><option value="">Todos os meses</option></select>
       </div>
       <div id="lancamentos-list" class="txn-list full"></div>
     </div>
 
-    <!-- GRAFICOS PAGE -->
+    <!-- GRAFICOS -->
     <div class="page" id="page-graficos">
-      <div class="card chart-card full-w" style="margin-bottom:12px">
+      <div class="card chart-card full-w" style="margin-bottom:14px">
         <div class="card-header"><span class="card-title">Evolução do saldo — 12 meses</span></div>
         <div class="chart-wrap lg"><canvas id="lineChart"></canvas></div>
       </div>
@@ -218,7 +239,7 @@
       </div>
     </div>
 
-    <!-- CATEGORIAS PAGE -->
+    <!-- CATEGORIAS -->
     <div class="page" id="page-categorias">
       <div class="card">
         <div class="card-header">
@@ -233,7 +254,7 @@
 
 <!-- MODAL LANCAMENTO -->
 <div class="modal-overlay hidden" id="modal" onclick="closeModal(event)">
-  <div class="modal-box" role="dialog" aria-modal="true" aria-label="Novo lançamento">
+  <div class="modal-box">
     <div class="modal-head">
       <span class="modal-head-title" id="modal-title-text">Novo lançamento</span>
       <button onclick="closeModal()" class="modal-close"><i class="ti ti-x"></i></button>
@@ -243,47 +264,29 @@
       <button id="t-in"  class="ttype active-in"  onclick="setType('in')"><i class="ti ti-arrow-up-circle"></i>Receita</button>
       <button id="t-out" class="ttype"             onclick="setType('out')"><i class="ti ti-arrow-down-circle"></i>Despesa</button>
     </div>
-    <div class="field">
-      <label>Descrição</label>
-      <input type="text" id="f-desc" placeholder="Ex: Salário, Supermercado..."/>
-    </div>
+    <div class="field"><label>Descrição</label><input type="text" id="f-desc" placeholder="Ex: Salário, Supermercado..."/></div>
     <div class="form-row2">
-      <div class="field">
-        <label>Valor (R$)</label>
-        <input type="number" id="f-val" placeholder="0,00" min="0.01" step="0.01"/>
-      </div>
-      <div class="field">
-        <label>Data</label>
-        <input type="date" id="f-date"/>
-      </div>
+      <div class="field"><label>Valor (R$)</label><input type="number" id="f-val" placeholder="0,00" min="0.01" step="0.01"/></div>
+      <div class="field"><label>Data</label><input type="date" id="f-date"/></div>
     </div>
-    <div class="field">
-      <label>Categoria</label>
-      <select id="f-cat-modal"></select>
-    </div>
+    <div class="field"><label>Categoria</label><select id="f-cat-modal"></select></div>
     <div id="modal-error" class="form-error hidden"></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-      <button class="btn-save" onclick="saveEntry()">Salvar</button>
+      <button class="btn-save" onclick="saveEntry()">Salvar lançamento</button>
     </div>
   </div>
 </div>
 
 <!-- MODAL CATEGORIA -->
 <div class="modal-overlay hidden" id="cat-modal" onclick="closeCatModal(event)">
-  <div class="modal-box" role="dialog" aria-modal="true">
+  <div class="modal-box">
     <div class="modal-head">
-      <span>Nova categoria</span>
+      <span class="modal-head-title">Nova categoria</span>
       <button onclick="closeCatModal()" class="modal-close"><i class="ti ti-x"></i></button>
     </div>
-    <div class="field">
-      <label>Nome</label>
-      <input type="text" id="cat-name" placeholder="Ex: Pet, Academia..."/>
-    </div>
-    <div class="field">
-      <label>Cor</label>
-      <div style="display:flex;gap:8px;flex-wrap:wrap" id="color-picker"></div>
-    </div>
+    <div class="field"><label>Nome</label><input type="text" id="cat-name" placeholder="Ex: Pet, Academia..."/></div>
+    <div class="field"><label>Cor</label><div style="display:flex;gap:8px;flex-wrap:wrap" id="color-picker"></div></div>
     <div id="cat-error" class="form-error hidden"></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeCatModal()">Cancelar</button>
